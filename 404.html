@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/portfolio/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - Navid Neisi</title>
+    <script>
+      // GitHub Pages SPA redirect fix
+      var pathSegments = window.location.pathname.split('/').filter(Boolean);
+      if (pathSegments[0] === 'portfolio') {
+        // Store the path for index.html to restore
+        sessionStorage.redirect = '/' + pathSegments.slice(1).join('/');
+        // Redirect to root with hash
+        window.location.replace('/portfolio/');
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/portfolio/src/main.jsx"></script>
+  </body>
+</html>
