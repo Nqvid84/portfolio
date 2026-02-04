@@ -1,5 +1,7 @@
 # Navid Neisi - Portfolio
 
+🔗 **Live Portfolio**: [https://nqvid84.github.io/portfolio/](https://nqvid84.github.io/portfolio/)
+
 ## About
 
 Frontend developer with 3+ years of experience building dashboards, admin panels, and interactive user interfaces. Specialized in React, TypeScript, and state management.
@@ -44,6 +46,29 @@ Frontend developer with 3+ years of experience building dashboards, admin panels
 **State & Data**: Redux, Zustand, TanStack Query
 
 **Tools**: Git, UI/UX Design, Dashboard Development
+
+## Deployment
+
+This portfolio is automatically deployed to GitHub Pages using GitHub Actions. 
+
+**How it works:**
+1. Push changes to the `master` branch
+2. GitHub Actions automatically builds the project
+3. Deployment happens to GitHub Pages
+
+The workflow file (`.github/workflows/deploy.yml`) handles:
+- Installing dependencies
+- Building with Vite
+- Deploying to GitHub Pages using `peaceiris/actions-gh-pages`
+
+**Live site**: [https://nqvid84.github.io/portfolio/](https://nqvid84.github.io/portfolio/)
+
+### Configure GitHub Pages (One-time setup)
+1. Go to your repository **Settings**
+2. Navigate to **Pages** section
+3. Under "Build and deployment", select:
+   - Source: **GitHub Actions**
+4. That's it! The workflow will handle everything
 
 ## License
 
