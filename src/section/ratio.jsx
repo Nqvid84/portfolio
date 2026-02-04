@@ -25,7 +25,7 @@ const ratioComponent = () => {
       </div>
       <div className="w-full flex-1 flex rounded-lg relative justify-center items-center h-full overflow-hidden">
         <img
-          src="/homebg.jpg"
+          src="portfolio/homebg.jpg"
           alt="bridge"
           className="w-full h-full object-top object-cover saturate-0 rounded-lg"
         />
