@@ -2,103 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Custom Fonts ──────────────────────────────────────────────────────────── */
+
 @font-face {
   font-family: "fanc";
   src: url(Regal.otf);
-}
-
-* {
-  margin: 0;
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-  
 }
 
 .font-fanc {
   font-family: "fanc" !important;
 }
 
-::-webkit-scrollbar {
-  height: 12px;
-  width: 5px;
-  background: #333;
-}
+/* ─── Reset & Base ──────────────────────────────────────────────────────────── */
 
-::-webkit-scrollbar-thumb {
-  background: #fff;
-  -webkit-border-radius: 1ex;
-}
-
-::-webkit-scrollbar-corner {
-  background: #333;
+* {
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  cursor: none;
 }
 
 :root {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
   font-synthesis: none;
-  font-family: Arial, Helvetica, sans-serif;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.SMN_effect-39 a:before,
-.SMN_effect-39 a:after {
-  content: "";
-  position: absolute;
-  width: 5px;
-  border-radius: 50%;
-  background: #fdc939;
-  top: 28px;
-  transition: height 0.3s 0.3s ease, border-radius 0.3s 0.3s ease,
-    top 0.3s 0.3s ease, width 0.3s ease;
+/* ─── Scrollbar ─────────────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  height: 12px;
+  width: 4px;
+  background: #27272a; /* zinc-800 */
 }
 
-.SMN_effect-39 a:before {
-  height: 5px;
-  left: 0;
+::-webkit-scrollbar-thumb {
+  background: #71717a; /* zinc-500 */
+  border-radius: 999px;
 }
 
-.SMN_effect-39 a:after {
-  height: 0;
-  right: 0;
+::-webkit-scrollbar-corner {
+  background: #27272a;
 }
 
-.SMN_effect-39 a:hover:before,
-.SMN_effect-39 a:hover:after {
-  top: 10%;
-  width: 55%;
-  height: 80%;
-  z-index: -1;
-  border-radius: 5px;
-  transition: height 0.3s ease, border-radius 0.3s ease, top 0.3s ease,
-    width 0.3s 0.3s ease;
-}
-
-.SMN_effect-39 a {
-  z-index: 1;
-  display: inline-block;
-  padding: 10px 20px;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.SMN_effect-39 a:hover {
-  transition: all 0.3s 0.3s ease;
-  text-decoration: none;
-}
-
-.gramaphone {
-  animation: spin 10s linear infinite;
-}
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* ─── Animated Hole (Skills section) ───────────────────────────────────────── */
 
 .hole {
   width: 18rem;
@@ -108,11 +57,13 @@
   animation: hole 14s linear infinite;
   perspective: 900px;
   transform-style: preserve-3d;
-  transform: rotate3d(6, -2, .9, 60deg);
-  box-shadow: 1vmin 0 3vmin 2vmin #fff,
-               inset -1vmin 0 3vmin 4vmin #fff,
-               -4vmin 0 18rem 0 #fff;
-  &:before, 
+  transform: rotate3d(6, -2, 0.9, 60deg);
+  box-shadow:
+    1vmin 0 3vmin 2vmin #fff,
+    inset -1vmin 0 3vmin 4vmin #fff,
+    -4vmin 0 18rem 0 #fff;
+
+  &:before,
   &:after {
     content: "";
     position: relative;
@@ -121,13 +72,16 @@
     display: flex;
     border-radius: 50%;
   }
+
   &:before {
     width: 8vmin;
     height: 8vmin;
     left: 14rem;
-    box-shadow: #fff 0 0 3vmin 3vmin,
-                #fff 2vmin 4vmin 2vmin .5vmin;
+    box-shadow:
+      #fff 0 0 3vmin 3vmin,
+      #fff 2vmin 4vmin 2vmin 0.5vmin;
   }
+
   &:after {
     width: 38vmin;
     height: 38vmin;
@@ -137,9 +91,27 @@
 }
 
 @keyframes hole {
-  0% {transform: rotate3d(6, -2, .9, 60deg) rotate(0deg)}
-  50% {
-    transform: rotate3d(6, -3, .9, 75deg) rotate(-180deg);
+  0% {
+    transform: rotate3d(6, -2, 0.9, 60deg) rotate(0deg);
   }
-  100% {transform: rotate3d(6, -2, .9, 60deg) rotate(-360deg)}
+  50% {
+    transform: rotate3d(6, -3, 0.9, 75deg) rotate(-180deg);
+  }
+  100% {
+    transform: rotate3d(6, -2, 0.9, 60deg) rotate(-360deg);
+  }
+}
+
+/* ─── Skills constellation — smaller hole variant ───────────────────────────── */
+
+.hole-sm {
+  width: 9rem;
+  height: 9rem;
+}
+
+/* ─── Skills constellation — per-node ambient float ────────────────────────── */
+
+@keyframes nodeFloat {
+  0%, 100% { transform: translateY(0px);  }
+  50%       { transform: translateY(-5px); }
 }
