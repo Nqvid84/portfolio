@@ -9,16 +9,16 @@ const ExperienceCardComponent = ({ experience }: ExperienceCardProps) => {
   const { company, role, period, bullets, skills } = experience;
 
   return (
-    <div className="w-full flex flex-col border border-zinc-700 hover:border-zinc-500 rounded-xl p-6 gap-6 transition-colors duration-300 bg-zinc-950/40">
+    <div className="w-full flex flex-col border border-zinc-700 active:border-zinc-500 lg:hover:border-zinc-500 rounded-xl p-4 sm:p-6 gap-4 sm:gap-6 transition-colors duration-300 bg-zinc-950/40">
       {/* Header row */}
       <div className="w-full flex flex-row flex-wrap justify-between items-start gap-2">
-        <div className="flex flex-col gap-1">
-          <h3 className="text-lg font-semibold text-zinc-100 tracking-wide">
+        <div className="flex flex-col gap-1 min-w-0">
+          <h3 className="text-base sm:text-lg font-semibold text-zinc-100 tracking-wide">
             {company}
           </h3>
           <p className="text-sm text-zinc-400">{role}</p>
         </div>
-        <span className="flex flex-row items-center gap-2 text-sm text-zinc-500 whitespace-nowrap">
+        <span className="flex flex-row items-center gap-2 text-xs sm:text-sm text-zinc-500 whitespace-nowrap">
           {period[0]}
           <span className="w-6 border-b border-zinc-600" />
           {period[1]}

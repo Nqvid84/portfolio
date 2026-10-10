@@ -30,6 +30,29 @@ const nodePositions: Record<string, { x: number; y: number }> = {
   "React Hook Form": { x: 86, y: 88 },
 };
 
+/* Tighter constellation for narrow viewports — desktop positions unchanged */
+const mobileNodePositions: Record<string, { x: number; y: number }> = {
+  "React":           { x: 18, y: 18 },
+  "Next.js":         { x: 10, y: 32 },
+  "TypeScript":      { x: 32, y: 12 },
+  "JavaScript":      { x: 30, y: 28 },
+  "Tailwind CSS":    { x: 68, y: 14 },
+  "MUI":             { x: 82, y: 24 },
+  "ShadCN":          { x: 66, y: 30 },
+  "Elastic UI":      { x: 84, y: 14 },
+  "Sass":            { x: 76, y: 38 },
+  "Git":             { x: 12, y: 64 },
+  "GitLab CI/CD":    { x: 24, y: 78 },
+  "Webpack":         { x: 34, y: 68 },
+  "Vite":            { x: 16, y: 88 },
+  "ESLint":          { x: 36, y: 58 },
+  "Prettier":        { x: 12, y: 52 },
+  "React Query":     { x: 66, y: 66 },
+  "Zod":             { x: 78, y: 74 },
+  "TanStack":        { x: 70, y: 84 },
+  "React Hook Form": { x: 84, y: 90 },
+};
+
 /* ─── Connection map: skill → related skills ────────────────────────────────── */
 
 const connections: Record<string, string[]> = {
@@ -57,10 +80,10 @@ const connections: Record<string, string[]> = {
 /* ─── Category labels — placed in the corridor between clusters & center ─────── */
 
 const categoryLabels = [
-  { id: "frontend", label: "Frontend",     x: 14, y: 44 },
-  { id: "styling",  label: "Styling & UI", x: 83, y: 44 },
-  { id: "tooling",  label: "Tooling",      x: 14, y: 56 },
-  { id: "other",    label: "Other",        x: 83, y: 56 },
+  { id: "frontend", label: "Frontend",     x: 14, y: 44, mx: 18, my: 42 },
+  { id: "styling",  label: "Styling & UI", x: 83, y: 44, mx: 80, my: 42 },
+  { id: "tooling",  label: "Tooling",      x: 14, y: 56, mx: 18, my: 58 },
+  { id: "other",    label: "Other",        x: 83, y: 56, mx: 80, my: 58 },
 ];
 
 /* ─── Flat skill list (all categories merged) ───────────────────────────────── */
@@ -69,16 +92,22 @@ const allSkills = skills.flatMap(cat =>
   cat.skills.map(name => ({ name, categoryId: cat.id }))
 );
 
+const canHover = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
 /* ─── Component ──────────────────────────────────────────────────────────────── */
 
 const SkillsComponent = () => {
   const [activeSkill, setActiveSkill] = useState<string | null>(null);
+  const [isCompact, setIsCompact] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const lineRefs = useRef<Record<string, SVGLineElement | null>>({});
   const activeCategoryId = activeSkill
     ? allSkills.find(({ name }) => name === activeSkill)?.categoryId
     : null;
+  const positions = isCompact ? mobileNodePositions : nodePositions;
   const connected = useMemo(() => {
     if (!activeSkill) return [];
 
@@ -93,6 +122,14 @@ const SkillsComponent = () => {
       ...(connections[activeSkill] ?? []),
     ])];
   }, [activeSkill]);
+
+  useLayoutEffect(() => {
+    const media = window.matchMedia("(max-width: 1023px)");
+    const sync = () => setIsCompact(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
 
   useLayoutEffect(() => {
     if (!activeSkill) return;
@@ -139,10 +176,11 @@ const SkillsComponent = () => {
   return (
     <motion.div
       ref={containerRef}
-      className="relative w-full h-full"
+      className="relative w-full h-full touch-manipulation"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
+      onClick={() => setActiveSkill(null)}
     >
 
       {/* ── SVG overlay: connection lines ───────────────────────────────────── */}
@@ -153,8 +191,8 @@ const SkillsComponent = () => {
         <AnimatePresence>
           {activeSkill &&
             connected.map((target, idx) => {
-              const from = nodePositions[activeSkill];
-              const to   = nodePositions[target];
+              const from = positions[activeSkill];
+              const to   = positions[target];
               if (!from || !to) return null;
               return (
                 <motion.line
@@ -179,7 +217,7 @@ const SkillsComponent = () => {
 
       {/* ── Skill nodes ─────────────────────────────────────────────────────── */}
       {allSkills.map(({ name }, idx) => {
-        const pos = nodePositions[name];
+        const pos = positions[name];
         if (!pos) return null;
 
         const isActive    = activeSkill === name;
@@ -212,13 +250,32 @@ const SkillsComponent = () => {
           >
             {/* CSS float animation — separate from FM so it keeps looping uninterrupted */}
             <div
-              className="flex flex-col items-center gap-[3px]"
+              role="button"
+              tabIndex={0}
+              aria-pressed={isActive}
+              className="flex flex-col items-center gap-[3px] cursor-pointer py-1 px-1"
               style={{
                 animation:      `nodeFloat ${floatDuration}s ease-in-out infinite`,
                 animationDelay: `${floatDelay}s`,
               }}
-              onMouseEnter={() => setActiveSkill(name)}
-              onMouseLeave={() => setActiveSkill(null)}
+              onMouseEnter={() => {
+                if (canHover()) setActiveSkill(name);
+              }}
+              onMouseLeave={() => {
+                if (canHover()) setActiveSkill(null);
+              }}
+              onClick={(event) => {
+                event.stopPropagation();
+                if (canHover()) return;
+                setActiveSkill((prev) => (prev === name ? null : name));
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  setActiveSkill((prev) => (prev === name ? null : name));
+                }
+              }}
             >
               {/* Dot */}
               <motion.div
@@ -239,7 +296,7 @@ const SkillsComponent = () => {
               />
               {/* Label */}
               <motion.span
-                className="text-[8px] lg:text-[9px] tracking-wider whitespace-nowrap select-none leading-none"
+                className="text-[7px] sm:text-[8px] lg:text-[9px] tracking-wider whitespace-nowrap select-none leading-none"
                 animate={{
                   color: isActive
                     ? "rgba(255,255,255,1)"
@@ -257,21 +314,23 @@ const SkillsComponent = () => {
       })}
 
       {/* ── Category labels ──────────────────────────────────────────────────── */}
-      {categoryLabels.map(({ id, label, x, y }) => {
+      {categoryLabels.map(({ id, label, x, y, mx, my }) => {
         const isActiveCategory = activeCategoryId === id;
+        const labelX = isCompact ? mx : x;
+        const labelY = isCompact ? my : y;
 
         return (
           <div
             key={id}
             className="absolute pointer-events-none select-none"
             style={{
-              left:      `${x}%`,
-              top:       `${y}%`,
+              left:      `${labelX}%`,
+              top:       `${labelY}%`,
               transform: "translate(-50%, -50%)",
             }}
           >
             <motion.span
-              className="text-xs font-light"
+              className="text-[10px] sm:text-xs font-light"
               animate={{
                 color: isActiveCategory
                   ? "rgba(255,255,255,1)"
@@ -300,7 +359,8 @@ const SkillsComponent = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.6, duration: 1.2 }}
       >
-        hover to reveal connections
+        <span className="lg:hidden">tap to reveal connections</span>
+        <span className="hidden lg:inline">hover to reveal connections</span>
       </motion.p>
     </motion.div>
   );

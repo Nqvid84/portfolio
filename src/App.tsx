@@ -25,7 +25,7 @@ function App() {
   const currentPage = sectionMap[navLocation] ?? <Hero />;
 
   return (
-    <main className="w-full h-[100vh] overflow-x-hidden flex flex-col bg-zinc-900 justify-center items-center">
+    <main className="w-full h-[100dvh] overflow-x-hidden flex flex-col bg-zinc-900 justify-center items-center">
       <Navbar
         links={navLinks}
         open={menuVisible}
@@ -42,10 +42,11 @@ function App() {
           setNavLocation(href);
           setMenuVisible(false);
         }}
+        onClose={() => setMenuVisible(false)}
       />
 
       {/* Page container */}
-      <div className="w-[90%] h-[90%] text-white bg-zinc-950 mt-8 border-white border-2 rounded-xl flex flex-col justify-center p-4 lg:p-6 items-center overflow-hidden">
+      <div className="w-[92%] sm:w-[90%] h-[88%] sm:h-[90%] text-white bg-zinc-950 mt-10 sm:mt-8 border-white border-2 rounded-xl flex flex-col justify-center p-3 sm:p-4 lg:p-6 items-center overflow-hidden">
         <AnimatePresence mode="wait">
           <div key={navLocation} className="w-full h-full">
             {currentPage}
@@ -53,9 +54,9 @@ function App() {
         </AnimatePresence>
       </div>
 
-      {/* Custom cursor — mix-blend-difference effect */}
+      {/* Custom cursor — fine-pointer desktops only */}
       <div
-        className="flex justify-center items-center pointer-events-none mix-blend-difference w-6 h-6 border-white border-2 rounded-full fixed translate-x-[-50%] translate-y-[-50%] z-50"
+        className="custom-cursor justify-center items-center pointer-events-none mix-blend-difference w-6 h-6 border-white border-2 rounded-full fixed translate-x-[-50%] translate-y-[-50%] z-50"
         style={{ top: y, left: x }}
       />
     </main>

@@ -19,7 +19,21 @@
   margin: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
-  cursor: none;
+}
+
+/* Custom cursor only on fine-pointer desktops */
+.custom-cursor {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none;
+  }
+
+  .custom-cursor {
+    display: flex;
+  }
 }
 
 :root {
@@ -107,6 +121,13 @@
 .hole-sm {
   width: 9rem;
   height: 9rem;
+}
+
+@media (max-width: 1023px) {
+  .hole-sm {
+    width: 6.5rem;
+    height: 6.5rem;
+  }
 }
 
 /* ─── Skills constellation — per-node ambient float ────────────────────────── */

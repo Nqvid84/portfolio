@@ -18,22 +18,22 @@ const HeroComponent = () => {
 
   return (
     <motion.div
-      className="text-zinc-400 w-full h-full flex flex-col lg:flex-row justify-center gap-8 items-center relative"
+      className="text-zinc-400 w-full h-full flex flex-col lg:flex-row justify-center gap-5 sm:gap-8 items-center relative overflow-y-auto lg:overflow-hidden"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
       {/* Text block */}
-      <div className="h-full w-full lg:w-4/12 flex flex-col justify-center items-start gap-4 px-4 lg:px-0">
+      <div className="h-auto lg:h-full w-full lg:w-4/12 flex flex-col justify-center items-start gap-3 sm:gap-4 px-2 sm:px-4 lg:px-0 shrink-0">
         <motion.h1
-          className="uppercase text-6xl lg:text-9xl text-zinc-100 leading-none"
+          className="uppercase text-5xl sm:text-6xl lg:text-9xl text-zinc-100 leading-none"
           variants={itemVariants}
         >
           {personalInfo.name}
         </motion.h1>
 
         <motion.h4
-          className="text-sm text-zinc-400 -mt-2 tracking-widest uppercase"
+          className="text-xs sm:text-sm text-zinc-400 -mt-2 tracking-widest uppercase"
           variants={itemVariants}
         >
           {personalInfo.title} · {personalInfo.yearsOfExperience}+ years
@@ -46,10 +46,10 @@ const HeroComponent = () => {
           {personalInfo.summary}
         </motion.p>
 
-        <motion.div className="flex flex-row gap-3 mt-2" variants={itemVariants}>
+        <motion.div className="flex flex-row flex-wrap gap-3 mt-2" variants={itemVariants}>
           <a
             href={`mailto:${personalInfo.email}`}
-            className="text-xs text-zinc-300 border border-zinc-700 rounded-full px-4 py-2 hover:border-zinc-400 hover:text-white transition-all duration-300"
+            className="text-xs text-zinc-300 border border-zinc-700 rounded-full px-4 py-2 active:border-zinc-400 active:text-white lg:hover:border-zinc-400 lg:hover:text-white transition-all duration-300"
           >
             Get in touch
           </a>
@@ -57,7 +57,7 @@ const HeroComponent = () => {
             href="/portfolio/cv.pdf"
             target="_blank"
             rel="noreferrer"
-            className="text-xs text-zinc-300 border border-zinc-700 rounded-full px-4 py-2 hover:border-zinc-400 hover:text-white transition-all duration-300"
+            className="text-xs text-zinc-300 border border-zinc-700 rounded-full px-4 py-2 active:border-zinc-400 active:text-white lg:hover:border-zinc-400 lg:hover:text-white transition-all duration-300"
           >
             Download CV
           </a>
@@ -66,7 +66,7 @@ const HeroComponent = () => {
 
       {/* Image block */}
       <motion.div
-        className="w-full flex-1 flex rounded-xl relative justify-center items-center h-full overflow-hidden"
+        className="w-full flex-1 min-h-[12rem] sm:min-h-[16rem] flex rounded-xl relative justify-center items-center h-full overflow-hidden"
         variants={itemVariants}
       >
         <img

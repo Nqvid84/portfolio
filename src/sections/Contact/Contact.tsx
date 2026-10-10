@@ -110,6 +110,7 @@ const ContactComponent = () => {
               className="flex flex-col gap-0.5"
               onMouseEnter={() => setFormIcon(icon)}
               onMouseLeave={() => setFormIcon(null)}
+              onTouchStart={() => setFormIcon(icon)}
               onFocusCapture={() => setFormIcon(icon)}
               onBlurCapture={() => setFormIcon(null)}
             >
@@ -119,7 +120,7 @@ const ContactComponent = () => {
               {href ? (
                 <a
                   href={href}
-                  className="text-zinc-400 text-xs hover:text-zinc-100 transition-colors duration-300"
+                  className="text-zinc-400 text-xs active:text-zinc-100 lg:hover:text-zinc-100 transition-colors duration-300 break-all sm:break-normal"
                   onClick={fireRipple(href)}
                 >
                   {value}
@@ -127,7 +128,7 @@ const ContactComponent = () => {
               ) : (
                 <button
                   type="button"
-                  className="text-zinc-400 text-xs text-left hover:text-zinc-100 transition-colors duration-300"
+                  className="text-zinc-400 text-xs text-left active:text-zinc-100 lg:hover:text-zinc-100 transition-colors duration-300"
                   onClick={fireRipple()}
                 >
                   {value}

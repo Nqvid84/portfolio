@@ -25,13 +25,13 @@ const ExperienceComponent = () => {
       animate="visible"
     >
       <motion.h2
-        className="text-xl font-semibold text-zinc-100 uppercase tracking-widest px-4 lg:px-8 pt-2"
+        className="text-lg sm:text-xl font-semibold text-zinc-100 uppercase tracking-widest px-2 sm:px-4 lg:px-8 pt-2"
         variants={itemVariants}
       >
         Experience
       </motion.h2>
 
-      <div className="w-full flex flex-col gap-4 px-4 lg:px-8 pb-4">
+      <div className="w-full flex flex-col gap-4 px-2 sm:px-4 lg:px-8 pb-4">
         {experiences.map((experience) => (
           <motion.div key={experience.id} variants={itemVariants}>
             <ExperienceCard experience={experience} />
