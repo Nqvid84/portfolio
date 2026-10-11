@@ -296,7 +296,7 @@ const SkillsComponent = () => {
               />
               {/* Label */}
               <motion.span
-                className="text-[7px] sm:text-[8px] lg:text-[9px] tracking-wider whitespace-nowrap select-none leading-none"
+                className="text-[10px] sm:text-[11px] lg:text-[13px] tracking-wider whitespace-nowrap select-none leading-none"
                 animate={{
                   color: isActive
                     ? "rgba(255,255,255,1)"
