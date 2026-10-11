@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { motion } from "framer-motion";
 import { personalInfo } from "@/data/portfolio.data";
+import { HeroImage } from "./HeroImage";
 
 const HeroComponent = () => {
   const containerVariants = {
@@ -69,26 +70,26 @@ const HeroComponent = () => {
         className="w-full flex-1 min-h-[12rem] sm:min-h-[16rem] flex rounded-xl relative justify-center items-center h-full overflow-hidden"
         variants={itemVariants}
       >
-        <img
+        <HeroImage
           src="/portfolio/images/hero-mashhad.jpg"
           alt="Mashhad cityscape"
-          className="w-full h-full object-center object-cover saturate-0 rounded-xl"
-        />
-        <span className="absolute text-white bottom-3 right-3 flex items-center gap-1 text-xs bg-zinc-950/60 backdrop-blur-sm px-2 py-1 rounded-full">
-          <svg
-            className="h-3 w-3"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-            <circle cx="12" cy="10" r="3" />
-          </svg>
-          {personalInfo.location}
-        </span>
+        >
+          <span className="absolute text-white bottom-3 right-3 flex items-center gap-1 text-xs bg-zinc-950/60 backdrop-blur-sm px-2 py-1 rounded-full pointer-events-none">
+            <svg
+              className="h-3 w-3"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            {personalInfo.location}
+          </span>
+        </HeroImage>
       </motion.div>
     </motion.div>
   );
